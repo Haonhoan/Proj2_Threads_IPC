@@ -1,0 +1,36 @@
+Part 1 (18 pts): Write a C program that generates an output with the following desired behavior:
+From main function we spawn 3 Pthreads. We are interested in handling signals both from main function
+and from the threads that belong to the following list:
+SIGINT, SIGSTOP, SIGILL.
+
+Each Pthread is spawned with the objective to catch one of the above signals only, and block or ignore the
+rest. Moreover, each thread with identity tid[i] should also compute the sum of integers from 0 to 1,000 x
+tid[i]. When one Pthread (or the main function) catches a signal, it should modify handling to just output
+the signal number and its own identity (thread or main).
+
+The main function is set up to ignore the signals until the three threads are created. After the three threads
+join, then the main function restores default operation for all three signals.
+In your code you may use either function signal or sigaction for setting up the signal handlers.
+Assume that signal does not automatically re-installs itself. Even though in most recent LINUX version
+the signal function does re-install itself, I would like you to distinguish those two cases and explain what
+happens next (in Part 2) for both cases: 1) signal does not re-install itself, 2) signal does re-install itself.
+You may run the one case experimentally, and for the second case you may manually revert to the old
+handler using programming or attempt to tackle this question theoretically.
+
+Part 2 (12 pts):
+After you write your code, now please use it to answer the following questions:
+Q1: (6 pts) What will be observed when the process receives one of the above signals externally (from
+terminal) during execution? Briefly describe each case. What does the result depend on? Please justify
+your answer. Now, answer the same questions, but send each signal twice or more.
+Q2: (6 pts) What will be observed when one thread sends one of the signals separately to a specific
+thread id (to one thread at a time) and to the main process itself? Study each case separately. Please
+justify your answers. Also, answer the same questions, but send each signal twice or more.
+Remark: Experiment with each signal at a time, record the messages you get on the screen and describe
+the behavior of your program. Does your program completely stop at all times, for all signals? Does one
+thread only get suspended or stopped or all the threads do, or the main process does? Report your
+findings. One way to check on the status of your threads (if your process is still alive) is to ask the threads
+send printouts with their id and status. Those that do are still alive and unblocked. Of course, bear in mind
+that some of the signals you sent completely terminate your program. In this case, re-run the program, and
+send one by one the rest of the signals.
+Please provide detailed code for this problem (you have ample degree of freedom) and a thorough report
+with your results and your justifications of the results.
