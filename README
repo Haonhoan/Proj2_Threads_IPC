@@ -1,0 +1,6 @@
+The program was made with the following process in mind. We decided to block/ignore signals by using pthread_sigmask. 
+For each signal and thread, we blocked the other two signals. For example, SIGINT, SIGSTOP and SIGILL were blocked/ignored for sigmask.  
+Then we created the thread which would run the thread function. Each thread had their own corresponding function which would just call 
+a signal and run the adder. Furthermore, each signal was designated their own handler who would output the signal number and thread 
+number if they were used. In the main function, we then joined all the threads together and unblocked the sigmask. We then also 
+called signal to default and ended the code there.
